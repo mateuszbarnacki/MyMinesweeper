@@ -19,7 +19,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Optional;
 
-
 public class SecondWindowController {
     @FXML
     private BorderPane mainBorderPane;
@@ -40,10 +39,24 @@ public class SecondWindowController {
     private static int playAgainMines;
     private Timeline time;
     private long sec = 0;
+    private String mode = "easy";
 
     public void initialize(){
         time = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
             timeLabel.setText(Converter.getInstance().convertLongToTimeString(++sec));
+            if (mode.compareTo("easy") == 0) {
+                if (sec == 10) {
+                    endOfTheTime();
+                }
+            } else if (mode.compareTo("medium") == 0) {
+                if (sec == 40*60) {
+                    endOfTheTime();
+                }
+            } else if (mode.compareTo("hard") == 0) {
+                if (sec == 99*60) {
+                    endOfTheTime();
+                }
+            }
         }));
     }
 
@@ -52,6 +65,16 @@ public class SecondWindowController {
         playAgainSecondSize = secondSize;
         playAgainMines = mines;
         isPause = true;
+
+        if (firstSize == 8 && secondSize == 8) {
+            mode = "easy";
+        } else if (firstSize == 16 && secondSize == 16) {
+            mode = "medium";
+        } else if (firstSize == 30 && secondSize == 16) {
+            mode = "hard";
+        } else {
+            mode = "custom";
+        }
 
         saperBoard = new SaperBoard(firstSize, secondSize, mines);
         saperBoard.fillGameBoard();
@@ -167,7 +190,7 @@ public class SecondWindowController {
         refreshGameBoard();
         if (saperBoard.isLoose()) {
             endOfTheGame();
-            looseOfTheGame();
+            loseOfTheGame();
         }
         if(saperBoard.isWin()){
             endOfTheGame();
@@ -198,6 +221,14 @@ public class SecondWindowController {
     }
 
     private void endOfTheGame(){
+        showMines();
+        time.stop();
+        playAgainButton.setDisable(false);
+        isFirstClick = true;
+        boardGridPane.setDisable(true);
+    }
+
+    private void showMines() {
         ObservableList<Node> nodes = boardGridPane.getChildren();
         StackPane stackPane;
         for (int i = 0; i < saperBoard.getSecondSize(); ++i) {
@@ -209,13 +240,9 @@ public class SecondWindowController {
                 }
             }
         }
-        time.stop();
-        playAgainButton.setDisable(false);
-        isFirstClick = true;
-        boardGridPane.setDisable(true);
     }
 
-    private void looseOfTheGame(){
+    private void loseOfTheGame(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of the game");
         alert.setHeaderText(null);
@@ -278,6 +305,23 @@ public class SecondWindowController {
             name = nameGetterWindow.getName();
         }
         return name;
+    }
+
+    private void endOfTheTime() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("End of the game");
+        alert.setHeaderText(null);
+        alert.setContentText("Time is up!");
+        alert.show();
+        alert.setOnShowing((event) -> {
+            Optional<ButtonType> response = alert.showAndWait();
+            if (response.isPresent()) alert.close();
+        });
+        time.stop();
+        showMines();
+        playAgainButton.setDisable(false);
+        isFirstClick = true;
+        boardGridPane.setDisable(true);
     }
 
     public void handlePlayAgainButton() {

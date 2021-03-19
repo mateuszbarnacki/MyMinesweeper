@@ -1,12 +1,13 @@
-package SaperPackage;
+package SaperPackage.Windows;
 
+import SaperPackage.Boards.MinesweeperBoard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class CustomWindow {
+public class CustomWindowController {
     private int minMines = 10;
     private int maxMines;
     @FXML
@@ -50,9 +51,9 @@ public class CustomWindow {
         return isValid;
     }
 
-    public SaperBoard processResult(){
+    public MinesweeperBoard processResult(){
         int firstSize, secondSize, mines;
-        SaperBoard board = null;
+        MinesweeperBoard board = null;
         if(columnsTextField.getText().isEmpty() || rowsTextField.getText().isEmpty() || minesTextField.getText().isEmpty()){
             throw new UnsupportedOperationException("Enter correct data");
         }
@@ -62,7 +63,7 @@ public class CustomWindow {
             mines = Integer.parseInt(minesTextField.getText());
 
             if( ((firstSize >= 8) && (firstSize <= 30)) && ((secondSize >= 8) && (secondSize <= 24)) && ((mines >= minMines) && (mines <= maxMines)) ) {
-                        board = new SaperBoard(firstSize, secondSize, mines);
+                        board = new MinesweeperBoard(firstSize, secondSize, mines);
             }else{
                 throw new UnsupportedOperationException("Can't create this game board");
             }

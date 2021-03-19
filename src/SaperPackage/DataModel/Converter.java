@@ -1,4 +1,4 @@
-package SaperPackage;
+package SaperPackage.DataModel;
 
 public class Converter {
     private final static Converter instance = new Converter();

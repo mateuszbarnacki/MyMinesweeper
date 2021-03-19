@@ -1,5 +1,6 @@
-package SaperPackage;
+package SaperPackage.Windows;
 
+import SaperPackage.Boards.MinesweeperBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -16,40 +17,40 @@ public class MainWindowController {
 
     public void handleFirstButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("secondWindow.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
         try {
             borderPane.setCenter(fxmlLoader.load());
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        SecondWindowController controller = fxmlLoader.getController();
+        GameWindowController controller = fxmlLoader.getController();
         controller.createGameScene(8, 8, 10);
     }
 
     public void handleSecondButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("secondWindow.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
         try {
             borderPane.setCenter(fxmlLoader.load());
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        SecondWindowController controller = fxmlLoader.getController();
+        GameWindowController controller = fxmlLoader.getController();
         controller.createGameScene(16, 16, 40);
     }
 
     public void handleThirdButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("secondWindow.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
         try {
             borderPane.setCenter(fxmlLoader.load());
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        SecondWindowController controller = fxmlLoader.getController();
+        GameWindowController controller = fxmlLoader.getController();
         controller.createGameScene(30, 16, 99);
     }
 
@@ -72,14 +73,14 @@ public class MainWindowController {
         Optional<ButtonType> result = dialog.showAndWait();
         if((result.isPresent()) && (result.get() == ButtonType.OK)){
             try{
-                CustomWindow controller = fxmlLoader.getController();
-                SaperBoard saperBoard = controller.processResult();
+                CustomWindowController controller = fxmlLoader.getController();
+                MinesweeperBoard saperBoard = controller.processResult();
                 try{
                     FXMLLoader secFXMLLoader = new FXMLLoader();
-                    secFXMLLoader.setLocation(getClass().getResource("secondWindow.fxml"));
+                    secFXMLLoader.setLocation(getClass().getResource("gameWindow.fxml"));
                     borderPane.setCenter(secFXMLLoader.load());
 
-                    SecondWindowController secondWindowController = secFXMLLoader.getController();
+                    GameWindowController secondWindowController = secFXMLLoader.getController();
                     secondWindowController.createGameScene(saperBoard.getFirstSize(), saperBoard.getSecondSize(), saperBoard.getMines());
                 }catch (IOException e){
                     e.printStackTrace();

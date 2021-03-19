@@ -1,4 +1,4 @@
-package SaperPackage;
+package SaperPackage.Boards;
 
 public abstract class Board {
     private int[][] board;

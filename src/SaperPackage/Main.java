@@ -11,9 +11,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Windows/mainWindow.fxml"));
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
-        primaryStage.setTitle("MySaper");
+        primaryStage.setTitle("MyMinesweeper");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
         primaryStage.show();

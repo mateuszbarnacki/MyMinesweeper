@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<BorderPane fx:id="mainBorderPane" prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SaperPackage.SecondWindowController">
+<BorderPane fx:id="mainBorderPane" prefWidth="800.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SaperPackage.Windows.GameWindowController">
     <center>
         <GridPane alignment="CENTER">
             <BorderPane fx:id="borderPane" prefWidth="650.0" prefHeight="500.0">

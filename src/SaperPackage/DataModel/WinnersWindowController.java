@@ -1,14 +1,12 @@
-package SaperPackage;
+package SaperPackage.DataModel;
 
-import SaperPackage.DataModel.Datasource;
-import SaperPackage.DataModel.TimeResult;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
-public class WinnersWindow {
+public class WinnersWindowController {
     @FXML
     private TableView<TimeResult> resultsTable;
 

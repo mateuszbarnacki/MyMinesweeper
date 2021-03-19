@@ -1,13 +1,15 @@
-package SaperPackage;
+package SaperPackage.Boards;
+
+import SaperPackage.Boards.Board;
 
 import java.util.Random;
 
-public class SaperBoard extends Board {
-    private int firstSize;
-    private int secondSize;
-    private int mines;
+public class MinesweeperBoard extends Board {
+    private final int firstSize;
+    private final int secondSize;
+    private final int mines;
 
-    public SaperBoard(int firstSize, int secondSize, int mines){
+    public MinesweeperBoard(int firstSize, int secondSize, int mines){
         super();
         this.firstSize = firstSize;
         this.secondSize = secondSize;

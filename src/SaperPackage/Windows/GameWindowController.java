@@ -1,6 +1,9 @@
-package SaperPackage;
+package SaperPackage.Windows;
 
+import SaperPackage.Boards.MinesweeperBoard;
+import SaperPackage.DataModel.Converter;
 import SaperPackage.DataModel.Datasource;
+import SaperPackage.DataModel.WinnersWindowController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
@@ -19,7 +22,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Optional;
 
-public class SecondWindowController {
+public class GameWindowController {
     @FXML
     private BorderPane mainBorderPane;
     @FXML
@@ -31,7 +34,7 @@ public class SecondWindowController {
     @FXML
     private Label timeLabel;
     private GridPane boardGridPane;
-    private SaperBoard saperBoard;
+    private MinesweeperBoard minesweeperBoard;
     private static boolean isPause;
     private static boolean isFirstClick = true;
     private static int playAgainFirstSize;
@@ -45,7 +48,7 @@ public class SecondWindowController {
         time = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
             timeLabel.setText(Converter.getInstance().convertLongToTimeString(++sec));
             if (mode.compareTo("easy") == 0) {
-                if (sec == 10) {
+                if (sec == 60*10) {
                     endOfTheTime();
                 }
             } else if (mode.compareTo("medium") == 0) {
@@ -76,17 +79,19 @@ public class SecondWindowController {
             mode = "custom";
         }
 
-        saperBoard = new SaperBoard(firstSize, secondSize, mines);
-        saperBoard.fillGameBoard();
-        borderPane.setCenter(drawBoard(saperBoard));
+        minesweeperBoard = new MinesweeperBoard(firstSize, secondSize, mines);
+        minesweeperBoard.fillGameBoard();
+        borderPane.setCenter(drawBoard(minesweeperBoard));
         playAgainButton.setDisable(true);
         pauseButton.setDisable(true);
     }
 
-    private GridPane drawBoard(SaperBoard saperBoard) {
+    private GridPane drawBoard(MinesweeperBoard saperBoard) {
         setGameBoardProperties();
-        double aSize = (590 - saperBoard.getFirstSize()) / (saperBoard.getFirstSize() - 1);
-        double bSize = (450 - saperBoard.getSecondSize()) / (saperBoard.getSecondSize() - 1);
+        double aSize;
+        double bSize = 450.0 / (saperBoard.getSecondSize()-1);
+        if (mode.compareTo("hard") != 0) aSize = 590.0 / saperBoard.getFirstSize();
+        else aSize = 590.0 / (saperBoard.getFirstSize()-1);
 
         for (int i = 0; i < saperBoard.getSecondSize(); ++i) {
             for (int j = 0; j < saperBoard.getFirstSize(); ++j) {
@@ -186,28 +191,28 @@ public class SecondWindowController {
             isPause = false;
             time.play();
         }
-        saperBoard.changeFieldValue(firstPosition, secondPosition);
+        minesweeperBoard.changeFieldValue(firstPosition, secondPosition);
         refreshGameBoard();
-        if (saperBoard.isLoose()) {
+        if (minesweeperBoard.isLoose()) {
             endOfTheGame();
             loseOfTheGame();
         }
-        if(saperBoard.isWin()){
+        if(minesweeperBoard.isWin()){
             endOfTheGame();
             winOfTheGame();
         }
     }
 
     private void refreshGameBoard() {
-//        saperBoard.printValues();
+//        minesweeperBoard.printValues();
         ObservableList<Node> nodes = boardGridPane.getChildren();
         Timeline timeline = new Timeline();
         int stepTime = 1;
         StackPane stackPane;
-        for (int i = 0; i < saperBoard.getSecondSize(); ++i) {
-            for (int j = 0; j < saperBoard.getFirstSize(); ++j) {
-                if (saperBoard.checkField(j, i) >= 0) {
-                    stackPane = (StackPane) nodes.get(i * saperBoard.getFirstSize() + j);
+        for (int i = 0; i < minesweeperBoard.getSecondSize(); ++i) {
+            for (int j = 0; j < minesweeperBoard.getFirstSize(); ++j) {
+                if (minesweeperBoard.checkField(j, i) >= 0) {
+                    stackPane = (StackPane) nodes.get(i * minesweeperBoard.getFirstSize() + j);
                     Rectangle rectangle = (Rectangle) stackPane.getChildren().get(2);
                     KeyFrame keyFrame = new KeyFrame(Duration.millis(stepTime * 20), e -> {
                         rectangle.setFill(Color.TRANSPARENT);
@@ -231,10 +236,10 @@ public class SecondWindowController {
     private void showMines() {
         ObservableList<Node> nodes = boardGridPane.getChildren();
         StackPane stackPane;
-        for (int i = 0; i < saperBoard.getSecondSize(); ++i) {
-            for (int j = 0; j < saperBoard.getFirstSize(); ++j) {
-                if (saperBoard.checkField(j, i) == -200) {
-                    stackPane = (StackPane) nodes.get(i * saperBoard.getFirstSize() + j);
+        for (int i = 0; i < minesweeperBoard.getSecondSize(); ++i) {
+            for (int j = 0; j < minesweeperBoard.getFirstSize(); ++j) {
+                if (minesweeperBoard.checkField(j, i) == -200) {
+                    stackPane = (StackPane) nodes.get(i * minesweeperBoard.getFirstSize() + j);
                     Rectangle rectangle = (Rectangle) stackPane.getChildren().get(2);
                     rectangle.setFill(Color.TRANSPARENT);
                 }
@@ -258,18 +263,18 @@ public class SecondWindowController {
 
         try{
             DialogPane dialogPane = fxmlLoader.load();
-            WinnersWindow winnersWindow = fxmlLoader.getController();
-            if((saperBoard.getFirstSize() == 8) && (saperBoard.getSecondSize() == 8)){
+            WinnersWindowController winnersWindow = fxmlLoader.getController();
+            if((minesweeperBoard.getFirstSize() == 8) && (minesweeperBoard.getSecondSize() == 8)){
                 Datasource.getInstance().insertEasyWinner(winnersName, timeLabel.getText());
                 winnersWindow.loadTableView("easy", null);
-            }else if((saperBoard.getFirstSize() == 16) && (saperBoard.getSecondSize() == 16)){
+            }else if((minesweeperBoard.getFirstSize() == 16) && (minesweeperBoard.getSecondSize() == 16)){
                 Datasource.getInstance().insertMediumWinner(winnersName, timeLabel.getText());
                 winnersWindow.loadTableView("medium", null);
-            }else if((saperBoard.getFirstSize() == 30) && (saperBoard.getSecondSize() == 16)){
+            }else if((minesweeperBoard.getFirstSize() == 30) && (minesweeperBoard.getSecondSize() == 16)){
                 Datasource.getInstance().insertHardWinner(winnersName, timeLabel.getText());
                 winnersWindow.loadTableView("hard", null);
             }else{
-                String type = saperBoard.getFirstSize() + " x " + saperBoard.getSecondSize();
+                String type = minesweeperBoard.getFirstSize() + " x " + minesweeperBoard.getSecondSize();
                 Datasource.getInstance().insertCustomWinner(winnersName, timeLabel.getText(), type);
                 winnersWindow.loadTableView("custom", type);
             }
@@ -301,7 +306,7 @@ public class SecondWindowController {
         Optional<ButtonType> result = dialog.showAndWait();
 
         if(result.isPresent()){
-            NameGetterWindow nameGetterWindow = fxmlLoader.getController();
+            NameGetterWindowController nameGetterWindow = fxmlLoader.getController();
             name = nameGetterWindow.getName();
         }
         return name;

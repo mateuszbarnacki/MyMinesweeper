@@ -4,5 +4,7 @@ module MySaper {
     requires java.sql;
 
     opens SaperPackage.DataModel;
+    opens SaperPackage.Windows;
+    opens SaperPackage.Boards;
     opens SaperPackage;
 }

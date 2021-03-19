@@ -1,39 +1,32 @@
 package SaperPackage.DataModel;
+
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Datasource {
 
-    public static final String DB_NAME = "saper_winners.db";
+    public static final String DB_NAME = "minesweeper_winners.db";
 
-    public static final String CONNECTION_STRING = "jdbc:sqlite:D:\\Programming\\SQL\\Databases\\" + DB_NAME;
+    public static final String CONNECTION_STRING = "jdbc:sqlite:D:." + File.separator + DB_NAME;
 
     public static final String TABLE_EASY = "easy";
     public static final String TABLE_EASY_NAME = "name";
     public static final String TABLE_EASY_TIME = "time";
-    public static final int INDEX_EASY_NAME = 1;
-    public static final int INDEX_EASY_TIME = 2;
 
     public static final String TABLE_MEDIUM = "medium";
     public static final String TABLE_MEDIUM_NAME = "name";
     public static final String TABLE_MEDIUM_TIME = "time";
-    public static final int INDEX_MEDIUM_NAME = 1;
-    public static final int INDEX_MEDIUM_TIME = 2;
 
     public static final String TABLE_HARD = "hard";
     public static final String TABLE_HARD_NAME = "name";
     public static final String TABLE_HARD_TIME = "time";
-    public static final int INDEX_HARD_NAME = 1;
-    public static final int INDEX_HARD_TIME = 2;
 
     public static final String TABLE_CUSTOM = "custom";
     public static final String TABLE_CUSTOM_NAME = "name";
     public static final String TABLE_CUSTOM_TIME = "time";
     public static final String TABLE_CUSTOM_TYPE = "type";
-    public static final int INDEX_CUSTOM_NAME = 1;
-    public static final int INDEX_CUSTOM_TIME = 2;
-    public static final int INDEX_CUSTOM_TYPE = 3;
 
     public static final String CREATE_EASY_WINNERS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_EASY +

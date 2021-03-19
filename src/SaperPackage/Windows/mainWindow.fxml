@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" prefHeight="450" prefWidth="600" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SaperPackage.MainWindowController">
+<BorderPane fx:id="borderPane" prefHeight="450" prefWidth="600" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SaperPackage.Windows.MainWindowController">
     <center>
         <GridPane hgap="25" vgap="25" alignment="CENTER">
             <BorderPane GridPane.columnIndex="0" GridPane.rowIndex="0">

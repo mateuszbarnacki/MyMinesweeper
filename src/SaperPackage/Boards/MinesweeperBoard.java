@@ -1,7 +1,5 @@
 package SaperPackage.Boards;
 
-import SaperPackage.Boards.Board;
-
 import java.util.Random;
 
 public class MinesweeperBoard extends Board {

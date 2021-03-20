@@ -5,7 +5,7 @@ module MySaper {
 
     opens SaperPackage.Utilities;
     opens SaperPackage.DataModel;
-    opens SaperPackage.Windows;
+    opens SaperPackage.Views;
     opens SaperPackage.Boards;
     opens SaperPackage;
 }

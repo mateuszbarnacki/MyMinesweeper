@@ -1,4 +1,4 @@
-package SaperPackage.Windows;
+package SaperPackage.Views;
 
 import SaperPackage.Boards.MinesweeperBoard;
 import javafx.fxml.FXML;

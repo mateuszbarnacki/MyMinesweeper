@@ -1,4 +1,4 @@
-package SaperPackage.Windows;
+package SaperPackage.Views;
 
 import SaperPackage.DataModel.Datasource;
 import SaperPackage.DataModel.TimeResult;

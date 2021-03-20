@@ -1,4 +1,4 @@
-package SaperPackage.Windows;
+package SaperPackage.Views;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

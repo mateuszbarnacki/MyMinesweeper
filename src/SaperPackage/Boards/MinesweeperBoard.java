@@ -2,11 +2,16 @@ package SaperPackage.Boards;
 
 import java.util.Random;
 
+/**
+ * This class prepares the game board for minesweeper game.
+ */
+
 public class MinesweeperBoard extends Board {
     private final int firstSize;
     private final int secondSize;
     private final int mines;
 
+    // Initialize sizes and number of mines.
     public MinesweeperBoard(int firstSize, int secondSize, int mines){
         super();
         this.firstSize = firstSize;
@@ -26,10 +31,15 @@ public class MinesweeperBoard extends Board {
         return mines;
     }
 
+    // Returns the value of the single field
     public int checkField(int firstCoordinate, int secondCoordinate){
         return getBoard()[firstCoordinate][secondCoordinate];
     }
 
+    /*
+        This function prepare the game board. Mines are signed as -200. Other fields are signed as -100.
+        If the field has a tip, the value of the tip is added to the field value.
+     */
     @Override
     public void fillGameBoard(){
         int[][] tempBoard = new int[firstSize][secondSize];
@@ -43,6 +53,7 @@ public class MinesweeperBoard extends Board {
         setBoard(tempBoard);
     }
 
+    // This function choose the coordinate for mines
     private int[][] setMines(int[][] arr){
         Random rand = new Random();
         int firstCoordinate, secondCoordinate;
@@ -58,6 +69,8 @@ public class MinesweeperBoard extends Board {
         return arr;
     }
 
+    // This function check the surrounding for each field and calculate the number of mines in the
+    // neighbourhood.
     private int[][] calculateTips(int[][] arr){
         for(int i = 0; i < secondSize; ++i){
             for(int j = 0; j < firstSize; ++j){
@@ -77,7 +90,8 @@ public class MinesweeperBoard extends Board {
         return arr;
     }
 
-    public boolean isLoose(){
+    // This function check whether user loose a game or not.
+    public boolean isLose(){
         int minesCounter = 0;
         for(int i = 0; i < secondSize; ++i){
             for(int j = 0; j < firstSize; ++j){
@@ -94,6 +108,7 @@ public class MinesweeperBoard extends Board {
         return false;
     }
 
+    // This function checks whether user win the game or not.
     public boolean isWin(){
         int fieldCounter = 0;
         for(int i = 0; i < secondSize; ++i){
@@ -110,6 +125,7 @@ public class MinesweeperBoard extends Board {
         return false;
     }
 
+    // This function change value of the clicked field/
     public void changeFieldValue(int firstCoordinate, int secondCoordinate){
         getBoard()[firstCoordinate][secondCoordinate] += 100;
         if(getBoard()[firstCoordinate][secondCoordinate] == 0){
@@ -125,6 +141,8 @@ public class MinesweeperBoard extends Board {
         }
     }
 
+
+    // Print function for tests
     public void printValues(){
         for(int i = 0; i < getSecondSize(); ++i){
             for(int j = 0; j < getFirstSize(); ++j){

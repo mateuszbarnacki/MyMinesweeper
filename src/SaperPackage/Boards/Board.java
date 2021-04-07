@@ -1,5 +1,10 @@
 package SaperPackage.Boards;
 
+/**
+ * This class prepares a board. I decided to create it abstract, because in the future
+ * I will merge minesweeper, tic tac toe and snake games.
+ */
+
 public abstract class Board {
     private int[][] board;
 

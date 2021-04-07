@@ -8,10 +8,14 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
+/**
+ * This is a winners window controller.
+ */
 public class WinnersWindowController {
     @FXML
     private TableView<TimeResult> resultsTable;
 
+    // This function fill the table using the data specified by type of the game.
     public void loadTableView(String nameOfTheType, String custom){
         if(nameOfTheType.equalsIgnoreCase("easy")){
             Task<ObservableList<TimeResult>> task = new GetEasyWinnersFromDatabaseTask();
@@ -39,6 +43,9 @@ public class WinnersWindowController {
     }
 }
 
+/**
+ * This class load list of easy winners.
+ */
 class GetEasyWinnersFromDatabaseTask extends Task {
     @Override
     public ObservableList<TimeResult>  call() throws Exception {
@@ -46,6 +53,9 @@ class GetEasyWinnersFromDatabaseTask extends Task {
     }
 }
 
+/**
+ * This class load list of medium winners.
+ */
 class GetMediumWinnersFromDatabaseTask extends Task {
     @Override
     public ObservableList<TimeResult>  call() throws Exception {
@@ -53,6 +63,9 @@ class GetMediumWinnersFromDatabaseTask extends Task {
     }
 }
 
+/**
+ * This class load list of hard winners.
+ */
 class GetHardWinnersFromDatabaseTask extends Task {
     @Override
     public ObservableList<TimeResult>  call() throws Exception {

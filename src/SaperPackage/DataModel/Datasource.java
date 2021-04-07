@@ -5,12 +5,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class enables user to get information about winners from database.
+ */
+
 public class Datasource {
-
+    // Filename
     public static final String DB_NAME = "minesweeper_winners.db";
-
+    // Connection string to sqlite database
     public static final String CONNECTION_STRING = "jdbc:sqlite:." + File.separator + DB_NAME;
 
+    // Structure of database
     public static final String TABLE_EASY = "easy";
     public static final String TABLE_EASY_NAME = "name";
     public static final String TABLE_EASY_TIME = "time";
@@ -28,6 +33,8 @@ public class Datasource {
     public static final String TABLE_CUSTOM_TIME = "time";
     public static final String TABLE_CUSTOM_TYPE = "type";
 
+
+    // Creation of the tables
     public static final String CREATE_EASY_WINNERS_TABLE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_EASY +
                     "(" + TABLE_EASY_NAME + " text, " + TABLE_EASY_TIME + " text)";
@@ -44,24 +51,28 @@ public class Datasource {
             "CREATE TABLE IF NOT EXISTS " + TABLE_CUSTOM +
                     "(" + TABLE_CUSTOM_NAME + " text, " + TABLE_CUSTOM_TIME + " text, " + TABLE_CUSTOM_TYPE + " text)";
 
+    // Operations on easy winners table
     public static final String INSERT_EASY_WINNER =
             "INSERT INTO " + TABLE_EASY + " (" + TABLE_EASY_NAME + ", " + TABLE_EASY_TIME + ") VALUES(?, ?)";
 
     public static final String QUERY_EASY_WINNERS =
             "SELECT * FROM " + TABLE_EASY + " ORDER BY " + TABLE_EASY_TIME;
 
+    // Operations on medium winners table
     public static final String INSERT_MEDIUM_WINNER =
             "INSERT INTO " + TABLE_MEDIUM + " (" + TABLE_EASY_NAME + ", " + TABLE_MEDIUM_TIME + ") VALUES(?, ?)";
 
     public static final String QUERY_MEDIUM_WINNERS =
             "SELECT * FROM " + TABLE_MEDIUM + " ORDER BY " + TABLE_MEDIUM + "." + TABLE_MEDIUM_TIME;
 
+    // Operations on hard winners table
     public static final String INSERT_HARD_WINNER =
             "INSERT INTO " + TABLE_HARD + " (" + TABLE_HARD_NAME + ", " + TABLE_HARD_TIME + ") VALUES(?, ?)";
 
     public static final String QUERY_HARD_WINNERS =
             "SELECT * FROM " + TABLE_HARD + " ORDER BY " + TABLE_HARD + "." + TABLE_HARD_TIME;
 
+    // Operations on custom winners table
     public static final String INSERT_CUSTOM_WINNER =
             "INSERT INTO " + TABLE_CUSTOM + " (" + TABLE_CUSTOM_NAME + ", " + TABLE_CUSTOM_TIME + ", " + TABLE_CUSTOM_TYPE + ") VALUES(?, ?, ?)";
 
@@ -135,6 +146,7 @@ public class Datasource {
         }
     }
 
+    // Executes queries
     private void createEasyWinnersTable() throws SQLException {
         Statement statement = connection.createStatement();
         statement.execute(CREATE_EASY_WINNERS_TABLE);
@@ -155,6 +167,7 @@ public class Datasource {
         statement.execute(CREATE_CUSTOM_WINNERS_TABLE);
     }
 
+    // Function returns list of easy winners
     public List<TimeResult> queryEasyWinners(){
         List<TimeResult> easyWinners = new ArrayList<>();
 
@@ -176,6 +189,7 @@ public class Datasource {
         }
     }
 
+    // Function returns list of medium winners
     public List<TimeResult> queryMediumWinners(){
         List<TimeResult> mediumWinners = new ArrayList<>();
 
@@ -197,6 +211,7 @@ public class Datasource {
         }
     }
 
+    // Function returns list of hard winners
     public List<TimeResult> queryHardWinners(){
         List<TimeResult> hardWinners = new ArrayList<>();
 
@@ -218,6 +233,7 @@ public class Datasource {
         }
     }
 
+    // Function returns list of custom winners
     public List<TimeResult> queryCustomWinners(String type){
         List<TimeResult> customWinners = new ArrayList<>();
 
@@ -241,6 +257,7 @@ public class Datasource {
         }
     }
 
+    // Function insert an easy winner to the database
     public boolean insertEasyWinner(String name, String time){
         try {
             queryInsertEasyWinner.setString(1, name);
@@ -255,6 +272,7 @@ public class Datasource {
         }
     }
 
+    // Function insert a medium winner to the database
     public boolean insertMediumWinner(String name, String time){
         try {
             queryInsertMediumWinner.setString(1, name);
@@ -269,6 +287,7 @@ public class Datasource {
         }
     }
 
+    // Function insert a hard winner to the database
     public boolean insertHardWinner(String name, String time){
         try {
             queryInsertHardWinner.setString(1, name);
@@ -283,6 +302,7 @@ public class Datasource {
         }
     }
 
+    // Function insert custom winner to the database
     public boolean insertCustomWinner(String name, String time, String type){
         try {
             queryInsertCustomWinner.setString(1, name);

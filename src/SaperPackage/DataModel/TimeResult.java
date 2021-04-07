@@ -2,6 +2,10 @@ package SaperPackage.DataModel;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * This class describe a single game result. It stores username and time.
+ */
+
 public class TimeResult {
     private SimpleStringProperty name;
     private SimpleStringProperty time;

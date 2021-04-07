@@ -1,5 +1,9 @@
 package SaperPackage.Utilities;
 
+/**
+ * This class convert a number of seconds to the time string.
+ */
+
 public class Converter {
     private final static Converter instance = new Converter();
 

@@ -11,10 +11,15 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * This class is a controller for main window.
+ */
+
 public class MainWindowController {
     @FXML
     private BorderPane borderPane;
 
+    // This function handle the first button. It loads a game window and set properties for easy game board.
     public void handleFirstButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
@@ -28,6 +33,7 @@ public class MainWindowController {
         controller.createGameScene(8, 8, 10);
     }
 
+    // This function handle the second button. It loads a game window and set properties for medum game board.
     public void handleSecondButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
@@ -41,6 +47,7 @@ public class MainWindowController {
         controller.createGameScene(16, 16, 40);
     }
 
+    // This function handle the third button. It loads a game window and set properties for hard game board.
     public void handleThirdButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("gameWindow.fxml"));
@@ -54,6 +61,8 @@ public class MainWindowController {
         controller.createGameScene(30, 16, 99);
     }
 
+    // This function handle the fourth button. It loads a dialog which enable the user to create
+    // a custom game board.
     public void handleFourthButton(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("customWindow.fxml"));

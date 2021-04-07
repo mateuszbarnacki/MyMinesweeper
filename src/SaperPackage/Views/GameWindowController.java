@@ -21,6 +21,10 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * This class is a controller for game window.
+ */
+
 public class GameWindowController {
     @FXML
     private BorderPane mainBorderPane;
@@ -43,6 +47,7 @@ public class GameWindowController {
     private long sec = 0;
     private String mode = "easy";
 
+    // This function initialize an animation of the timer.
     public void initialize(){
         time = new Timeline(new KeyFrame(Duration.seconds(1), (e) -> {
             timeLabel.setText(Converter.getInstance().convertLongToTimeString(++sec));
@@ -62,6 +67,7 @@ public class GameWindowController {
         }));
     }
 
+    // This function creates a prepare all elements of game window.
     public void createGameScene(int firstSize, int secondSize, int mines) {
         playAgainFirstSize = firstSize;
         playAgainSecondSize = secondSize;
@@ -85,6 +91,7 @@ public class GameWindowController {
         pauseButton.setDisable(true);
     }
 
+    // This function draw minesweeper board.
     private GridPane drawBoard(MinesweeperBoard saperBoard) {
         setGameBoardProperties();
         double aSize;
@@ -111,12 +118,14 @@ public class GameWindowController {
         return boardGridPane;
     }
 
+    // This function set style of the minesweeper grid.
     private void setGameBoardProperties() {
         boardGridPane = new GridPane();
         boardGridPane.setVgap(1);
         boardGridPane.setHgap(1);
     }
 
+    // This function draw a first part of the minesweeper field.
     private StackPane drawEmptyField(StackPane stackPane, double firstSize, double secondSize) {
         Rectangle rectangle = new Rectangle(firstSize, secondSize);
         rectangle.setFill(Color.WHITE);
@@ -124,6 +133,7 @@ public class GameWindowController {
         return stackPane;
     }
 
+    // This function draw mines.
     private StackPane addMines(StackPane stackPane, double size) {
         Circle circle = new Circle();
         circle.setRadius(size);
@@ -132,6 +142,7 @@ public class GameWindowController {
         return stackPane;
     }
 
+    // This function draw numbers with tips.
     private StackPane addTips(StackPane stackPane, int code) {
         Label label = new Label();
         if (code == -99) {
@@ -164,6 +175,7 @@ public class GameWindowController {
         return stackPane;
     }
 
+    // This function hide all the minesweeper fields.
     private StackPane hideField(StackPane stackPane, double firstSize, double secondSize) {
         Rectangle rectangle = new Rectangle(firstSize, secondSize);
         rectangle.setFill(Color.BLUE);
@@ -178,6 +190,7 @@ public class GameWindowController {
         return stackPane;
     }
 
+    // This function handle the click event.
     private void processClick(int firstPosition, int secondPosition) {
         if(isFirstClick){
             pauseButton.setDisable(false);
@@ -192,7 +205,7 @@ public class GameWindowController {
         }
         minesweeperBoard.changeFieldValue(firstPosition, secondPosition);
         refreshGameBoard();
-        if (minesweeperBoard.isLoose()) {
+        if (minesweeperBoard.isLose()) {
             endOfTheGame();
             loseOfTheGame();
         }
@@ -202,6 +215,8 @@ public class GameWindowController {
         }
     }
 
+    // This function remove the top layer of the minesweeper field.
+    // It creates an animation to make a breaks after show each tile.
     private void refreshGameBoard() {
 //        minesweeperBoard.printValues();
         ObservableList<Node> nodes = boardGridPane.getChildren();
@@ -224,6 +239,7 @@ public class GameWindowController {
         timeline.play();
     }
 
+    // This function display all the mines and disable game board after end of the game.
     private void endOfTheGame(){
         showMines();
         time.stop();
@@ -232,6 +248,7 @@ public class GameWindowController {
         boardGridPane.setDisable(true);
     }
 
+    // This function show all the fields with mines.
     private void showMines() {
         ObservableList<Node> nodes = boardGridPane.getChildren();
         StackPane stackPane;
@@ -246,6 +263,7 @@ public class GameWindowController {
         }
     }
 
+    // This function display an alert with end of the game information.
     private void loseOfTheGame(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of the game");
@@ -254,6 +272,7 @@ public class GameWindowController {
         alert.showAndWait();
     }
 
+    // This function display the winners window with all scores.
     private void winOfTheGame(){
         String winnersName = getWinnersName();
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -286,6 +305,7 @@ public class GameWindowController {
         }
     }
 
+    // This function display a name getter window which enables user to type username.
     private String getWinnersName(){
         String name = null;
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -311,6 +331,7 @@ public class GameWindowController {
         return name;
     }
 
+    // This function display an alert window with end of the time information.
     private void endOfTheTime() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of the game");
@@ -328,12 +349,14 @@ public class GameWindowController {
         boardGridPane.setDisable(true);
     }
 
+    // This function handle play again button.
     public void handlePlayAgainButton() {
         createGameScene(playAgainFirstSize, playAgainSecondSize, playAgainMines);
         sec = 0;
         timeLabel.setText("00:00");
     }
 
+    // This function handle change difficulty button.
     public void handleChangeDifficultyButton() {
         time.stop();
         isFirstClick = true;
@@ -349,6 +372,7 @@ public class GameWindowController {
         }
     }
 
+    // This function handle pause button.
     public void handlePauseButton(){
         isPause = true;
         time.stop();
